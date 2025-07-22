@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react';
 import { CartItem, MetalPlateConfig, PriceCalculation } from '../interfaces/MetalPlate';
-import { calculatePlatePrice } from '../services/pricingService';
 
 // Cart state interface
 interface CartState {
