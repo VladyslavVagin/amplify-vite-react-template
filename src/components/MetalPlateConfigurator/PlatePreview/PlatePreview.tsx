@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlateDimensions, PlateColor } from '../../../interfaces/MetalPlate';
+import type { PlateDimensions, PlateColor } from '../../../interfaces/MetalPlate.interface';
 
 interface PlatePreviewProps {
   dimensions: PlateDimensions;

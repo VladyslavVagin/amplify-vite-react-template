@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { PlateDimensions, PlateColor, MetalPlateConfig } from '../../interfaces/MetalPlate';
+import { useState, useEffect, useMemo, FC } from 'react';
+
+import type{ PlateDimensions, PlateColor, MetalPlateConfig } from '../../interfaces/MetalPlate.interface';
 import { METAL_PLATE_COLORS, DEFAULT_DIMENSIONS, DIMENSION_CONSTRAINTS } from '../../services/metalPlateData';
 import { calculatePlatePrice } from '../../services/pricingService';
 import PlatePreview from './PlatePreview/PlatePreview';
@@ -9,7 +10,7 @@ interface MetalPlateConfiguratorProps {
   onConfigurationChange?: (config: MetalPlateConfig) => void;
 }
 
-const MetalPlateConfigurator: React.FC<MetalPlateConfiguratorProps> = ({ 
+const MetalPlateConfigurator: FC<MetalPlateConfiguratorProps> = ({ 
   onConfigurationChange 
 }) => {
   // State for plate dimensions
@@ -28,7 +29,7 @@ const MetalPlateConfigurator: React.FC<MetalPlateConfiguratorProps> = ({
   const config = useMemo(() => ({
     dimensions,
     color: selectedColor,
-    id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
     createdAt: new Date()
   }), [dimensions, selectedColor]);
 

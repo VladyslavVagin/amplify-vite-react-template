@@ -1,4 +1,4 @@
-import { PlateDimensions, PlateColor, PriceCalculation } from '../interfaces/MetalPlate';
+import type { PlateDimensions, PlateColor, PriceCalculation } from '../interfaces/MetalPlate.interface';
 
 // Base pricing constants
 const BASE_PRICE_PER_CM2 = 0.15; // Base price per square centimeter

@@ -1,4 +1,4 @@
-import { PlateColor } from '../interfaces/MetalPlate';
+import type { PlateColor } from '../interfaces/MetalPlate.interface';
 
 /**
  * Predefined metal plate color/material options

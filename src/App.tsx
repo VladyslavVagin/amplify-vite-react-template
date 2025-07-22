@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Authenticator } from "@aws-amplify/ui-react";
+
 import MainPage from "./pages/MainPage";
 import AuthPage from "./pages/AuthPage";
-import ProtectedRoute from "./components/ProtectedRoute";
+import { ProtectedRoute } from "./components/Auth";
 import { useCart } from "./contexts/CartContext";
 
 function App() {
@@ -24,7 +25,6 @@ function App() {
     <Authenticator.Provider>
       <Router>
         <Routes>
-          {/* Protected main page - requires authentication */}
           <Route 
             path="/" 
             element={
@@ -34,10 +34,7 @@ function App() {
             } 
           />
           
-          {/* Auth page - accessible without authentication */}
           <Route path="/auth" element={<AuthPage />} />
-          
-          {/* Catch all other routes and redirect to main page */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>

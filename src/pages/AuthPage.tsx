@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, Navigate } from "react-router-dom";
 import { useAuthenticator } from "@aws-amplify/ui-react";
+
 import CustomAuthenticator from "../components/Auth/CustomAuthenticator";
 
 const AuthPage = () => {
@@ -25,9 +26,8 @@ const AuthPage = () => {
 
   return (
     <CustomAuthenticator initialState={initialState}>
-      <div className="min-h-screen flex flex-col">
-        {/* This div will be replaced by the Authenticator component */}
-      </div>
+      {/* This div will be replaced by the Authenticator component */}
+      <div className="min-h-screen flex flex-col"></div>
     </CustomAuthenticator>
   );
 };

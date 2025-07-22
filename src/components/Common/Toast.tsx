@@ -1,10 +1,6 @@
 import { FC } from "react";
 
-interface ToastProps {
-  message: string;
-  isVisible: boolean;
-  type?: 'info' | 'success' | 'warning' | 'error';
-}
+import type { ToastProps } from "../../interfaces";
 
 const Toast: FC<ToastProps> = ({ message, isVisible, type = 'info' }) => {
   if (!isVisible) return null;

@@ -1,6 +1,7 @@
 import { FC } from "react"
+
 import { formatPrice } from "../../../services/pricingService"
-import { PriceCalculation, MetalPlateConfig } from "../../../interfaces/MetalPlate";
+import type { PriceCalculation, MetalPlateConfig } from "../../../interfaces/MetalPlate.interface";
 import { useCart } from "../../../contexts/CartContext";
 
 interface PricingSectionProps {

@@ -1,5 +1,6 @@
-import { FC } from "react"
-import logoImage from "/logo-metal.png"
+import { FC } from "react";
+
+import logoImage from "/logo-metal.png";
 
 const Logo: FC = () => {
   return (
@@ -8,7 +9,7 @@ const Logo: FC = () => {
           <img src={logoImage} alt="logo" sizes="100%" className="w-full h-full"/>
       </a>
       <div className="hidden sm:block">
-        <h1 className="text-xl font-bold text-primary">Zuschnittprofi</h1>
+        <h1 className="text-xl font-bold text-primary">Vladyslav V.</h1>
         <p className="text-sm text-base-content/70">Metal Plate Configurator</p>
       </div>
     </div>

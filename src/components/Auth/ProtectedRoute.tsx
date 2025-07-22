@@ -9,12 +9,9 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { authStatus } = useAuthenticator();
 
-  // If user is not authenticated, redirect to auth page
   if (authStatus !== "authenticated") {
     return <Navigate to="/auth#login" replace />;
   }
-
-  // If user is authenticated, render the protected content
   return <>{children}</>;
 };
 

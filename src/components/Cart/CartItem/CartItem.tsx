@@ -1,5 +1,5 @@
 import React from 'react';
-import { CartItem as CartItemType } from '../../../interfaces/MetalPlate';
+import type { CartItem as CartItemType } from '../../../interfaces/MetalPlate.interface';
 import { useCart } from '../../../contexts/CartContext';
 import { formatPrice } from '../../../services/pricingService';
 

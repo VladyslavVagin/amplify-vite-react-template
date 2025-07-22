@@ -1,9 +1,10 @@
-import React from 'react';
+import { FC } from 'react';
+
 import { useCart } from '../../contexts/CartContext';
 import CartItem from './CartItem/CartItem';
 import { formatPrice } from '../../services/pricingService';
 
-const Cart: React.FC = () => {
+const Cart: FC = () => {
   const { state, closeCart, getTotalItems, getTotalPrice } = useCart();
 
   const handlePay = () => {

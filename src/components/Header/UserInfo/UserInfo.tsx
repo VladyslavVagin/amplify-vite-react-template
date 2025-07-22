@@ -1,5 +1,5 @@
+import { FC } from 'react';
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { FC } from 'react'
 
 const UserInfo: FC = () => {
     const { user } = useAuthenticator();

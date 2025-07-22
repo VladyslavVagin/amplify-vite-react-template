@@ -7,7 +7,7 @@ import App from "./App.tsx";
 import "./index.css";
 import outputs from "../amplify_outputs.json";
 import { CartProvider } from "./contexts/CartContext";
-// Configure Amplify
+
 Amplify.configure(outputs);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
