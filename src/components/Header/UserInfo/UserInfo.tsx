@@ -4,7 +4,11 @@ import { FC } from 'react'
 const UserInfo: FC = () => {
     const { user } = useAuthenticator();
   return (
-    <h1 className='text-2xl font-bold'>Email: {user?.signInDetails?.loginId}</h1>
+    <div className="text-center md:text-left">
+      <h1 className='text-lg md:text-2xl font-bold break-words'>
+        {user?.signInDetails?.loginId}
+      </h1>
+    </div>
   )
 }
 
