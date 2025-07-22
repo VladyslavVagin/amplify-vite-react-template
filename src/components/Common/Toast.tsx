@@ -1,13 +1,20 @@
 import { FC } from "react";
 
-const Toast: FC = () => {
+interface ToastProps {
+  message: string;
+  isVisible: boolean;
+  type?: 'info' | 'success' | 'warning' | 'error';
+}
+
+const Toast: FC<ToastProps> = ({ message, isVisible, type = 'info' }) => {
+  if (!isVisible) return null;
+
+  const alertClass = `alert alert-${type}`;
+
   return (
     <div className="toast toast-top toast-end">
-      <div className="alert alert-info">
-        <span>New mail arrived.</span>
-      </div>
-      <div className="alert alert-success">
-        <span>Message sent successfully.</span>
+      <div className={alertClass}>
+        <span>{message}</span>
       </div>
     </div>
   );

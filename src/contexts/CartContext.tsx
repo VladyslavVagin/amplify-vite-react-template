@@ -6,6 +6,11 @@ import { calculatePlatePrice } from '../services/pricingService';
 interface CartState {
   items: CartItem[];
   isOpen: boolean;
+  toast: {
+    isVisible: boolean;
+    message: string;
+    type: 'info' | 'success' | 'warning' | 'error';
+  };
 }
 
 // Cart action types
@@ -15,12 +20,19 @@ type CartAction =
   | { type: 'UPDATE_QUANTITY'; payload: { id: string; quantity: number } }
   | { type: 'CLEAR_CART' }
   | { type: 'TOGGLE_CART' }
-  | { type: 'CLOSE_CART' };
+  | { type: 'CLOSE_CART' }
+  | { type: 'SHOW_TOAST'; payload: { message: string; type?: 'info' | 'success' | 'warning' | 'error' } }
+  | { type: 'HIDE_TOAST' };
 
 // Initial cart state
 const initialState: CartState = {
   items: [],
   isOpen: false,
+  toast: {
+    isVisible: false,
+    message: '',
+    type: 'info',
+  },
 };
 
 // Cart reducer
@@ -86,6 +98,25 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
     case 'CLOSE_CART':
       return { ...state, isOpen: false };
 
+    case 'SHOW_TOAST':
+      return {
+        ...state,
+        toast: {
+          isVisible: true,
+          message: action.payload.message,
+          type: action.payload.type || 'info',
+        },
+      };
+
+    case 'HIDE_TOAST':
+      return {
+        ...state,
+        toast: {
+          ...state.toast,
+          isVisible: false,
+        },
+      };
+
     default:
       return state;
   }
@@ -102,6 +133,8 @@ interface CartContextType {
   closeCart: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
+  showToast: (message: string, type?: 'info' | 'success' | 'warning' | 'error') => void;
+  hideToast: () => void;
 }
 
 // Create context
@@ -117,6 +150,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   const addItem = (config: MetalPlateConfig, priceCalculation: PriceCalculation) => {
     dispatch({ type: 'ADD_ITEM', payload: { config, priceCalculation } });
+    const message = `${config.dimensions.length} x ${config.dimensions.width} ${config.dimensions.unit} ${config.color.name} plate added to cart!`;
+    showToast(message, 'success');
   };
 
   const removeItem = (id: string) => {
@@ -139,6 +174,14 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     dispatch({ type: 'CLOSE_CART' });
   };
 
+  const showToast = (message: string, type?: 'info' | 'success' | 'warning' | 'error') => {
+    dispatch({ type: 'SHOW_TOAST', payload: { message, type } });
+  };
+
+  const hideToast = () => {
+    dispatch({ type: 'HIDE_TOAST' });
+  };
+
   const getTotalItems = () => {
     return state.items.reduce((total, item) => total + item.quantity, 0);
   };
@@ -157,6 +200,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     closeCart,
     getTotalItems,
     getTotalPrice,
+    showToast,
+    hideToast,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
