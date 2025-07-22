@@ -1,20 +1,13 @@
-import { useState, useCallback, useEffect } from "react";
-import Footer from "./components/Footer/Footer";
-import Header from "./components/Header/Header";
-import MetalPlateConfigurator from "./components/MetalPlateConfigurator";
-import { MetalPlateConfig } from "./interfaces/MetalPlate";
-import Hero from "./components/Hero/Hero";
-import Cart from "./components/Cart/Cart";
-import Toast from "./components/Common/Toast";
+import { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Authenticator } from "@aws-amplify/ui-react";
+import MainPage from "./pages/MainPage";
+import AuthPage from "./pages/AuthPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { useCart } from "./contexts/CartContext";
 
 function App() {
-  const [_, setCurrentConfig] = useState<MetalPlateConfig | null>(null);
   const { state, hideToast } = useCart();
-
-  const handleConfigurationChange = useCallback((config: MetalPlateConfig) => {
-    setCurrentConfig(config);
-  }, []);
 
   // Auto-hide toast after 3 seconds
   useEffect(() => {
@@ -28,20 +21,27 @@ function App() {
   }, [state.toast.isVisible, hideToast]);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
-        <Hero />
-        <MetalPlateConfigurator onConfigurationChange={handleConfigurationChange} />
-      </main>
-      <Footer />
-      <Cart />
-      <Toast 
-        message={state.toast.message}
-        isVisible={state.toast.isVisible}
-        type={state.toast.type}
-      />
-    </div>
+    <Authenticator.Provider>
+      <Router>
+        <Routes>
+          {/* Protected main page - requires authentication */}
+          <Route 
+            path="/" 
+            element={
+              <ProtectedRoute>
+                <MainPage />
+              </ProtectedRoute>
+            } 
+          />
+          
+          {/* Auth page - accessible without authentication */}
+          <Route path="/auth" element={<AuthPage />} />
+          
+          {/* Catch all other routes and redirect to main page */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+    </Authenticator.Provider>
   );
 }
 

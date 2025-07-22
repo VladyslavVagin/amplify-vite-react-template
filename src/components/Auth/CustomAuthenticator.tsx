@@ -4,9 +4,10 @@ import logoImage from "/logo-metal.png";
 
 interface CustomAuthenticatorProps {
   children: ReactNode;
+  initialState?: "signIn" | "signUp";
 }
 
-const CustomAuthenticator: FC<CustomAuthenticatorProps> = ({ children }) => {
+const CustomAuthenticator: FC<CustomAuthenticatorProps> = ({ children, initialState = "signIn" }) => {
   const { tokens } = useTheme();
 
   // Custom components for the Authenticator
@@ -245,7 +246,7 @@ const CustomAuthenticator: FC<CustomAuthenticatorProps> = ({ children }) => {
           formFields={formFields} 
           components={components}
           className="custom-authenticator"
-          initialState="signIn"
+          initialState={initialState}
         >
           {() => (
             <div className="min-h-screen flex flex-col">
