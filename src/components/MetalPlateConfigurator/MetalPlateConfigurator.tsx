@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { PlateDimensions, PlateColor, MetalPlateConfig } from '../../interfaces/MetalPlate';
 import { METAL_PLATE_COLORS, DEFAULT_DIMENSIONS, DIMENSION_CONSTRAINTS } from '../../services/metalPlateData';
 import { calculatePlatePrice, formatPrice } from '../../services/pricingService';
@@ -16,28 +16,25 @@ const MetalPlateConfigurator: React.FC<MetalPlateConfiguratorProps> = ({
   
   // State for selected color/material
   const [selectedColor, setSelectedColor] = useState<PlateColor>(METAL_PLATE_COLORS[0]);
-  
-  // State for price calculation
-  const [priceCalculation, setPriceCalculation] = useState(() => 
-    calculatePlatePrice(dimensions, selectedColor)
+
+  // Calculate price using useMemo to avoid unnecessary recalculations
+  const priceCalculation = useMemo(() => 
+    calculatePlatePrice(dimensions, selectedColor), 
+    [dimensions, selectedColor]
   );
 
-  // Update price calculation when dimensions or color changes
+  // Create configuration object using useMemo
+  const config = useMemo(() => ({
+    dimensions,
+    color: selectedColor,
+    id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    createdAt: new Date()
+  }), [dimensions, selectedColor]);
+
+  // Update parent component when configuration changes
   useEffect(() => {
-    const newPrice = calculatePlatePrice(dimensions, selectedColor);
-    setPriceCalculation(newPrice);
-    
-    // Create configuration object
-    const config: MetalPlateConfig = {
-      dimensions,
-      color: selectedColor,
-      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      createdAt: new Date()
-    };
-    
-    // Notify parent component
     onConfigurationChange?.(config);
-  }, [dimensions, selectedColor, onConfigurationChange]);
+  }, [config, onConfigurationChange]);
 
   // Handle dimension changes
   const handleDimensionChange = (field: 'length' | 'width', value: number) => {
@@ -178,8 +175,23 @@ const MetalPlateConfigurator: React.FC<MetalPlateConfiguratorProps> = ({
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Pricing Section */}
+        {/* Preview Panel with Pricing */}
+        <div className="space-y-6">
+          <div className="card bg-base-100 shadow-xl">
+            <div className="card-body">
+              <h3 className="card-title text-xl font-bold mb-4">
+                <span className="text-primary">👁️</span> Plate Preview
+              </h3>
+              <PlatePreview 
+                dimensions={dimensions}
+                color={selectedColor}
+              />
+            </div>
+          </div>
+
+          {/* Pricing Section - Moved here */}
           <div className="card bg-base-100 shadow-xl">
             <div className="card-body">
               <h3 className="card-title text-xl font-bold mb-4">
@@ -209,19 +221,6 @@ const MetalPlateConfigurator: React.FC<MetalPlateConfiguratorProps> = ({
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Preview Panel */}
-        <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h3 className="card-title text-xl font-bold mb-4">
-              <span className="text-primary">👁️</span> Plate Preview
-            </h3>
-            <PlatePreview 
-              dimensions={dimensions}
-              color={selectedColor}
-            />
           </div>
         </div>
       </div>
