@@ -23,7 +23,9 @@ For start project in local development need:
 ## Project Description
 In this aplication we have Authentication, protected routes (login require), mobile devices adaptation. Interface have only one route "/" with Metal Plate Configurator.
 Here user can choose Length, Width, MM/CM and color due to instructions. We also add some additional information and preview for better understanding what product user choose and for more comfortable usage. 
-We make simulation of online shop, so products have some price and aplication has Cart component. In cart component user can add more products, reduce or remove from cart product. 
+We make simulation of online shop, so products have some price and aplication has Cart component.
+
+In cart component user can add more products, reduce or remove from cart product. 
 For Cart logic we use React Context. When user like to proceed with payment we just show in console.log object with data that will be sending to API. 
 Also in header we show Logo, Email of user, Cart button and Logout button. For mobile version in header will be just Logo and Burger Menu button where will be located all other components.
 If user try to go to some route that not exist like "/tetsgdhd" he will be redirect to main page of aplication or to login page, depending of Authentication State (login or not).
