@@ -82,7 +82,7 @@ const MetalPlateConfigurator: React.FC<MetalPlateConfiguratorProps> = ({
                   <label className="label">
                     <span className="label-text font-medium">Unit</span>
                   </label>
-                  <div className="btn-group">
+                  <div className="flex gap-x-2">
                     <button
                       className={`btn ${dimensions.unit === 'cm' ? 'btn-primary' : 'btn-outline'}`}
                       onClick={() => handleUnitChange('cm')}
@@ -215,8 +215,7 @@ const MetalPlateConfigurator: React.FC<MetalPlateConfiguratorProps> = ({
               </div>
 
               <div className="card-actions justify-end mt-4">
-                <button className="btn btn-primary btn-wide">
-                  <span className="text-lg">🛒</span>
+                <button className="btn btn-accent btn-wide">
                   Add to Cart
                 </button>
               </div>
