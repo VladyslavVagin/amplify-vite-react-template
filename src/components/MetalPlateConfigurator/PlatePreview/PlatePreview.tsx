@@ -9,30 +9,35 @@ interface PlatePreviewProps {
 const PlatePreview: React.FC<PlatePreviewProps> = ({ dimensions, color }) => {
   // Calculate preview dimensions (scaled for display)
   const maxPreviewSize = 300; // Maximum preview size in pixels
+  const minPreviewSize = 50; // Minimum preview size in pixels
+  const maxAspectRatio = 8; // Maximum aspect ratio to prevent extreme shapes
+  
   const aspectRatio = dimensions.length / dimensions.width;
   
   let previewWidth: number;
   let previewHeight: number;
   
-  if (aspectRatio > 1) {
+  // Limit aspect ratio to prevent extreme shapes
+  const limitedAspectRatio = Math.max(1 / maxAspectRatio, Math.min(maxAspectRatio, aspectRatio));
+  
+  if (limitedAspectRatio > 1) {
     // Landscape orientation
     previewWidth = maxPreviewSize;
-    previewHeight = maxPreviewSize / aspectRatio;
+    previewHeight = maxPreviewSize / limitedAspectRatio;
   } else {
     // Portrait orientation
     previewHeight = maxPreviewSize;
-    previewWidth = maxPreviewSize * aspectRatio;
+    previewWidth = maxPreviewSize * limitedAspectRatio;
   }
 
   // Ensure minimum size for very small plates
-  const minSize = 50;
-  if (previewWidth < minSize) {
-    previewWidth = minSize;
-    previewHeight = minSize / aspectRatio;
+  if (previewWidth < minPreviewSize) {
+    previewWidth = minPreviewSize;
+    previewHeight = minPreviewSize / limitedAspectRatio;
   }
-  if (previewHeight < minSize) {
-    previewHeight = minSize;
-    previewWidth = minSize * aspectRatio;
+  if (previewHeight < minPreviewSize) {
+    previewHeight = minPreviewSize;
+    previewWidth = minPreviewSize * limitedAspectRatio;
   }
 
   return (
@@ -97,7 +102,10 @@ const PlatePreview: React.FC<PlatePreviewProps> = ({ dimensions, color }) => {
       {/* Scale Indicator */}
       <div className="flex items-center space-x-2 text-xs text-base-content/60">
         <div className="w-8 h-0.5 bg-base-content/40"></div>
-        <span>Scale: 1:{Math.round(maxPreviewSize / Math.max(dimensions.length, dimensions.width))}</span>
+        <span>
+          Scale: 1:{Math.round(maxPreviewSize / Math.max(dimensions.length, dimensions.width))}
+          {aspectRatio > maxAspectRatio || aspectRatio < 1 / maxAspectRatio ? ' (aspect ratio limited)' : ''}
+        </span>
       </div>
     </div>
   );
