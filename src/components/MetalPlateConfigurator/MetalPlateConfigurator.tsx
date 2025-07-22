@@ -193,7 +193,7 @@ const MetalPlateConfigurator: React.FC<MetalPlateConfiguratorProps> = ({
           </div>
 
           {/* Pricing Section - Moved here */}
-          <PricingSection priceCalculation={priceCalculation} />
+          <PricingSection priceCalculation={priceCalculation} config={config} />
         </div>
       </div>
     </div>

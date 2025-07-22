@@ -28,4 +28,10 @@ export interface PriceCalculation {
   materialPrice: number;
   totalPrice: number;
   currency: string;
+}
+
+// Interface for cart items
+export interface CartItem extends MetalPlateConfig {
+  quantity: number;
+  price: number;
 } 

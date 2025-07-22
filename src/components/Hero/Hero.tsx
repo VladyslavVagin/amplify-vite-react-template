@@ -4,7 +4,7 @@ const Hero: FC = () => {
   return (
     <div className="hero bg-gradient-to-r from-primary/10 to-secondary/10 py-4 md:py-2">
       <div className="hero-content text-center">
-        <div className="max-w-2xl px-4">
+        <div className="max-w-2xl px-4 md:max-w-3xl">
           <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6">
             <span className="text-primary">⚙️</span> Metal Plate Configurator
           </h1>

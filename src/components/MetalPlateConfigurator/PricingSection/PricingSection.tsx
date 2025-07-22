@@ -1,12 +1,19 @@
 import { FC } from "react"
 import { formatPrice } from "../../../services/pricingService"
-import { PriceCalculation } from "../../../interfaces/MetalPlate";
+import { PriceCalculation, MetalPlateConfig } from "../../../interfaces/MetalPlate";
+import { useCart } from "../../../contexts/CartContext";
 
 interface PricingSectionProps {
     priceCalculation: PriceCalculation;
+    config: MetalPlateConfig;
 }
 
-const PricingSection: FC<PricingSectionProps> = ({ priceCalculation }) => {
+const PricingSection: FC<PricingSectionProps> = ({ priceCalculation, config }) => {
+  const { addItem } = useCart();
+
+  const handleAddToCart = () => {
+    addItem(config, priceCalculation);
+  };
   return (
     <div className="card bg-base-100 shadow-xl">
     <div className="card-body">
@@ -31,7 +38,10 @@ const PricingSection: FC<PricingSectionProps> = ({ priceCalculation }) => {
       </div>
 
       <div className="card-actions justify-end mt-4">
-        <button className="btn btn-accent btn-wide">
+        <button 
+          className="btn btn-accent btn-wide"
+          onClick={handleAddToCart}
+        >
           Add to Cart
         </button>
       </div>

@@ -4,6 +4,7 @@ import Header from "./components/Header/Header";
 import MetalPlateConfigurator from "./components/MetalPlateConfigurator";
 import { MetalPlateConfig } from "./interfaces/MetalPlate";
 import Hero from "./components/Hero/Hero";
+import Cart from "./components/Cart/Cart";
 
 function App() {
   const [_, setCurrentConfig] = useState<MetalPlateConfig | null>(null);
@@ -20,6 +21,7 @@ function App() {
         <MetalPlateConfigurator onConfigurationChange={handleConfigurationChange} />
       </main>
       <Footer />
+      <Cart />
     </div>
   );
 }

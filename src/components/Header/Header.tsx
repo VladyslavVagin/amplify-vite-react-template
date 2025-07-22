@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import SignOutButton from "./SignOutButton/SignOutButton";
 import UserInfo from "./UserInfo/UserInfo";
 import Logo from "./Logo/Logo";
+import CartIcon from "../Cart/CartIcon/CartIcon";
 
 const Header: FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -19,6 +20,7 @@ const Header: FC = () => {
 
       {/* Desktop Menu */}
       <div className="hidden md:flex gap-x-4 items-center">
+        <CartIcon />
         <UserInfo />
         <SignOutButton />
       </div>
@@ -60,6 +62,10 @@ const Header: FC = () => {
       {isMobileMenuOpen && (
         <div className="absolute top-full left-0 right-0 bg-base-100 shadow-lg border-t border-base-300 md:hidden z-50 min-h-[120px]">
           <div className="p-4 space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="font-medium">Cart</span>
+              <CartIcon />
+            </div>
             <UserInfo />
             <SignOutButton />
           </div>
